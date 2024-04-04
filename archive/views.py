@@ -23,15 +23,26 @@ from django.db.models import Q
 from .models import *
 from .forms import *
 
-# @login_required(login_url='login')
+@login_required(login_url='login')
 def Home(request):
     thesis = ThesisUpload.objects.all()
+    if request.method == 'POST':
+        search = request.POST.get('search')
+        thesis = ThesisUpload.objects.filter(Q(title__icontains=search) |
+                                             Q(abstract__icontains=search) | 
+                                             Q(date_finished__icontains=search))
     context = {'thesis': thesis}
     return render(request, 'archive/thesis_archive.html', context)
 
-# @login_required(login_url='login')
+@login_required(login_url='login')
 def ThesisUploadPage(request):
     thesis = ThesisUpload.objects.all()
+    form = ThesisForm()
+    if request.method == 'POST':
+        form = ThesisForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
     context = {'thesis': thesis}
     return render(request, 'archive/upload_thesis.html', context)
 

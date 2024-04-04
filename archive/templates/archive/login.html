@@ -89,16 +89,16 @@
               <form
                 id="formAuthentication"
                 class="mb-3"
-                action="index.html"
                 method="POST"
               >
+                {% csrf_token %}
                 <div class="mb-3">
                   <label for="email" class="form-label">Username</label>
                   <input
                     type="text"
                     class="form-control"
                     id="email"
-                    name="email-username"
+                    name="username"
                     placeholder="Enter your username"
                     autofocus
                   />
@@ -130,7 +130,13 @@
                   </button>
                 </div>
               </form>
-
+              {% if messages %}
+                {% for message in messages %}
+                  <script>
+                    alert("{{message}}");
+                  </script>
+                {% endfor %}
+              {% endif %}
               <p class="text-center">
                 <span>New on our platform?</span>
                 <a href="{% url 'register' %}">

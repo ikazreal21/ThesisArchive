@@ -10,15 +10,20 @@ Thesis Archive System - Dashboard
 {% block content %} 
 
 <div class="row mb-5">
+    {% for i in thesis %}
     <div class="col-md-6 col-lg-4">
         <div class="card text-center mb-3">
             <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="javascript:void(0)" class="btn btn-primary">Go somewhere</a>
+            <h5 class="card-title">{{i.title | title}}</h5>
+            <h6 class="card-title">Publish on {{i.date_pretty}}</h6>
+            <p class="card-text">{{i.author|title}}, {{i.author1|title}}, {{i.author2|title}}, {{i.author3|title}}, {{i.author4|title}}</p>
+
+            <p class="card-text">{{i.abstract|capfirst}}</p>
+            <a href="{{i.file_thesis.url}}" target="_blank" class="btn btn-primary">Check the Full Capstone</a>
             </div>
         </div>
     </div>
+    {% endfor %}
 </div>
 
 {% endblock %}

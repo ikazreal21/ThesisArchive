@@ -18,8 +18,12 @@ class ThesisUpload(models.Model):
     author3 = models.CharField(max_length=200, null=True, blank=True)
     author4 = models.CharField(max_length=200, null=True, blank=True)
     abstract = models.TextField(null=True, blank=True)
+    date_finished = models.CharField(max_length=200, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     file_thesis = models.FileField(upload_to='thesis_files/', null=True, blank=True)
 
     def __str__(self):
         return self.title
+    
+    def date_pretty(self):
+        return self.date.strftime('%B %Y')
