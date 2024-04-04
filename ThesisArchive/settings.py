@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-u8dvwnfb0l$f7z%0dvz#wv3&pe6i_wue3eza1d@=3vdy!_j8(_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['thesisarchivesys-151fac36b5a9.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -84,6 +84,11 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+import dj_database_url
+
+DATABASES['default'] = dj_database_url.parse("mysql://k23zgygieugmmqf1:om92g0ehlimrz3du@hngomrlb3vfq3jcr.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/v8ubwlzuj8aixw74", conn_max_age=600)
+DATABASES['default']['OPTIONS'] = {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"}
 
 
 # Password validation
