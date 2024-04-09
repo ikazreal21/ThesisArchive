@@ -21,6 +21,7 @@ class ThesisUpload(models.Model):
     date_finished = models.CharField(max_length=200, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     file_thesis = models.FileField(upload_to='thesis_files/', null=True, blank=True)
+    thesis_cover = models.ImageField(upload_to='thesis_covers/', null=True, blank=True)
 
     def __str__(self):
         return self.title

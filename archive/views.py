@@ -29,8 +29,8 @@ def Home(request):
     if request.method == 'POST':
         search = request.POST.get('search')
         thesis = ThesisUpload.objects.filter(Q(title__icontains=search) |
-                                             Q(abstract__icontains=search) | 
-                                             Q(date_finished__icontains=search))
+        Q(abstract__icontains=search) | 
+        Q(date_finished__icontains=search))
     context = {'thesis': thesis}
     return render(request, 'archive/thesis_archive.html', context)
 
