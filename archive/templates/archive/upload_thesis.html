@@ -23,6 +23,7 @@ Thesis Archive System - Upload
             id="exampleFormControlInput1"
             placeholder="Title"
             name="title"
+            required
           />
         </div>
         <div class="mb-3">
@@ -33,6 +34,7 @@ Thesis Archive System - Upload
               placeholder="Author's Name"
               name="author"
               style="margin-bottom: 5px;"
+              required
             />
             <input
             type="text"
@@ -40,6 +42,7 @@ Thesis Archive System - Upload
             placeholder="Author's Name"
             name="author1"
             style="margin-bottom: 5px;"
+            required
              />
             <input
             type="text"
@@ -47,6 +50,7 @@ Thesis Archive System - Upload
             placeholder="Author's Name"
             name="author2"
             style="margin-bottom: 5px;"
+            required
             />
             <input
             type="text"
@@ -54,6 +58,7 @@ Thesis Archive System - Upload
             placeholder="Author's Name"
             name="author3"
             style="margin-bottom: 5px;"
+            required
             />
             <input
             type="text"
@@ -66,20 +71,20 @@ Thesis Archive System - Upload
           <div class="mb-3 row">
             <label for="html5-month-input" class="col-md-2 col-form-label">Month</label>
             <div class="col-md-10">
-              <input class="form-control" type="month" value="2024-04" id="html5-month-input" name="date_finished" />
+              <input class="form-control" type="month" value="2024-04" id="html5-month-input" name="date_finished" required />
             </div>
           </div>
         <div>
           <label for="exampleFormControlTextarea1" class="form-label">Abstract</label>
-          <textarea class="form-control" name="abstract" id="exampleFormControlTextarea1" rows="3"></textarea>
+          <textarea class="form-control" name="abstract" id="exampleFormControlTextarea1" rows="3" required></textarea>
         </div>
         <div class="mb-3">
           <label for="formFile" class="form-label">Upload Capstone PDF</label>
-          <input class="form-control" type="file" id="formFile" name="file_thesis" />
+          <input class="form-control" type="file" id="formFile" name="file_thesis" required />
         </div>
         <div class="mb-3">
           <label for="formFile" class="form-label">Upload Capstone Cover</label>
-          <input class="form-control" type="file" id="formFile" name="thesis_cover" />
+          <input class="form-control" type="file" id="formFile" name="thesis_cover" required />
         </div>
         <div class="mb-3">
           <div class="col-sm-6">
