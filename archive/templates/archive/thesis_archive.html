@@ -22,7 +22,9 @@ Thesis Archive System - Dashboard
             <p class="card-text">{{i.author|title}}, {{i.author1|title}}, {{i.author2|title}}, {{i.author3|title}}, {{i.author4|title}}</p>
 
             <p class="card-text">{{i.abstract|capfirst|truncatewords:15|slice:"-4"}}...</p>
-            <a href="{{i.file_thesis.url}}" target="_blank" class="btn btn-primary">Check the Full Capstone</a>
+{% if i.file_thesis %}            
+<a href="{{i.file_thesis.url}}" target="_blank" class="btn btn-primary">Check the Full Capstone</a>
+{% endif %}
             </div>
         </div>
     </div>
