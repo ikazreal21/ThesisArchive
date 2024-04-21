@@ -10,7 +10,23 @@ from django.core.files.storage import FileSystemStorage
 from django.db import models
 
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    first_name = models.CharField(max_length=200, null=True, blank=True)
+    last_name = models.CharField(max_length=200, null=True, blank=True)
+    email = models.EmailField(max_length=200, null=True, blank=True)
+    phone = models.CharField(max_length=200, null=True, blank=True)
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics', null=True, blank=True)
+    date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.first_name
+
+    def date_pretty(self):
+        return self.date.strftime('%B %Y')
+
 class ThesisUpload(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=200, null=True, blank=True)
     author = models.CharField(max_length=200, null=True, blank=True)
     author1 = models.CharField(max_length=200, null=True, blank=True)
@@ -18,6 +34,7 @@ class ThesisUpload(models.Model):
     author3 = models.CharField(max_length=200, null=True, blank=True)
     author4 = models.CharField(max_length=200, null=True, blank=True)
     abstract = models.TextField(null=True, blank=True)
+    category = models.CharField(max_length=200, null=True, blank=True)
     date_finished = models.CharField(max_length=200, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     file_thesis = models.FileField(upload_to='thesis_files/', null=True, blank=True)

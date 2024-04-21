@@ -198,7 +198,8 @@
               id="navbar-collapse"
             >
               <!-- Search -->
-              <form action="" method="post">
+              {% if '/thesis_upload/' not in request.path %}
+              <form action="" method="POST">
               <div class="navbar-nav align-items-center">
                 <div class="nav-item d-flex align-items-center">
                   <i class="bx bx-search fs-4 lh-0"></i>
@@ -210,10 +211,17 @@
                       aria-label="Search..."
                       name="search"
                     />
+                    <select class="form-select" id="exampleFormControlSelect1" aria-label="" name="category" style="margin-right: 1rem;">
+                      <option selected value="">Select Category</option>
+                      {% for i in category %}
+                      <option value="{{i.category}}">{{i.category|title}}</option>
+                      {% endfor %}
+                    </select>
                     <button type="submit" class="btn btn-primary">Search</button>
                   </div>
                 </div>
               </form>
+              {% endif %}
                 <!-- /Search -->
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->

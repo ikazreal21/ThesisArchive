@@ -19,8 +19,12 @@ Thesis Archive System - Dashboard
             {% endif %}
             <h5 class="card-title">{{i.title | title}}</h5>
             <h6 class="card-title">Publish on {{i.date_pretty}}</h6>
-            <p class="card-text">{{i.author|title}}, {{i.author1|title}}, {{i.author2|title}}, {{i.author3|title}}, {{i.author4|title}}</p>
-
+            <h6>Main Contributors</h6>
+            <p class="card-text">
+                {{i.author|title}}, {{i.author1|title}}</p>
+            <h6>Other Contributors</h6>
+            <p class="card-text">
+                {{i.author2|title}}, {{i.author3|title}}, {{i.author4|title}}</p>
             <p class="card-text">{{i.abstract|capfirst|truncatewords:15|slice:"-4"}}...</p>
             <a href="{{i.file_thesis.url}}" target="_blank" class="btn btn-primary">Check the Full Capstone</a>
             </div>

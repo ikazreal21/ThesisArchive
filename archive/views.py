@@ -26,12 +26,28 @@ from .forms import *
 @login_required(login_url='login')
 def Home(request):
     thesis = ThesisUpload.objects.all()
+    categories = ThesisUpload.objects.values("category").distinct()
+    print(categories)
     if request.method == 'POST':
         search = request.POST.get('search')
-        thesis = ThesisUpload.objects.filter(Q(title__icontains=search) |
-        Q(abstract__icontains=search) | 
-        Q(date_finished__icontains=search))
-    context = {'thesis': thesis}
+        category = request.POST.get('category')
+        print(search, category)
+        if search and category:
+            thesis = ThesisUpload.objects.filter(Q(title__icontains=search) |
+            Q(abstract__icontains=search) | 
+            Q(date_finished__icontains=search))
+            print(thesis)
+            thesis = thesis.filter(category=category)
+            print(thesis)
+        elif search:
+            thesis = ThesisUpload.objects.filter(Q(title__icontains=search) |
+            Q(abstract__icontains=search) | 
+            Q(date_finished__icontains=search))
+        elif category:
+            thesis = ThesisUpload.objects.filter(category=category)
+        else:
+            thesis = ThesisUpload.objects.all()
+    context = {'thesis': thesis, 'category': categories}
     return render(request, 'archive/thesis_archive.html', context)
 
 @login_required(login_url='login')
