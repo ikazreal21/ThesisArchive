@@ -16,11 +16,11 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=200, null=True, blank=True)
     email = models.EmailField(max_length=200, null=True, blank=True)
     phone = models.CharField(max_length=200, null=True, blank=True)
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics', null=True, blank=True)
+    image = models.ImageField(upload_to='profile_pics', null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
-        return self.first_name
+        return f"{self.first_name}"
 
     def date_pretty(self):
         return self.date.strftime('%B %Y')

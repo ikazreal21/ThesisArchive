@@ -3,7 +3,7 @@
 }
 
 #header {
-    background: #5f61e6;
+    background: #007938;
     color: #fff;
 }
 #header a:link, #header a:visited {
@@ -125,7 +125,7 @@ a.active.selector-chooseall:hover, a.active.selector-clearall:hover {
 }
 
 .button.default, input[type=submit].default, .submit-row input.default {
-    background: #5f61e6;
+    background: #007938;
 }
 
 .button.default:hover, input[type=submit].default:hover {
@@ -137,7 +137,7 @@ a.active.selector-chooseall:hover, a.active.selector-clearall:hover {
 }
 
 .button.default, input[type=submit].default, .submit-row input.default {
-    background: #5f61e6;
+    background: #007938;
 }
 
 .object-tools a:focus, .object-tools a:hover {

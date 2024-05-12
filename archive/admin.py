@@ -10,6 +10,7 @@ from django.contrib.auth.models import Group
 
 admin.site.unregister(Group)
 admin.site.register(ThesisUpload)
+admin.site.register(Profile)
 
 admin.site.site_header = "Admin Portal"
 admin.site.site_title = "Admin Portal"

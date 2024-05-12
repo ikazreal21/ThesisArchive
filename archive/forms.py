@@ -14,3 +14,8 @@ class ThesisForm(ModelForm):
     class Meta:
         model = ThesisUpload
         fields = '__all__'
+
+class ProfileForm(ModelForm):
+    class Meta:
+        model = Profile
+        fields = '__all__'
