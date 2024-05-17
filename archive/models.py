@@ -39,9 +39,10 @@ class ThesisUpload(models.Model):
     date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     file_thesis = models.FileField(upload_to='thesis_files/', null=True, blank=True)
     thesis_cover = models.ImageField(upload_to='thesis_covers/', null=True, blank=True)
+    status = models.CharField(max_length=200, null=True, blank=True, default='Pending')
 
     def __str__(self):
-        return self.title
+        return f"{self.title} - {self.status}"
     
     def date_pretty(self):
         return self.date.strftime('%B %Y')

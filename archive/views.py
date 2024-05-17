@@ -118,7 +118,7 @@ def Register(request):
         print(form.errors)
         if form.is_valid():
             user = form.save()
-            Profile.objects.create(user=user)
+            Profile.objects.create(user=user, email=user.email)
             return redirect('login')
     context = {'form': form}
     return render(request, 'archive/register.html', context)
