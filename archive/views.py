@@ -41,15 +41,19 @@ def Home(request):
             Q(date_finished__icontains=search))
             print(thesis)
             thesis = thesis.filter(category=category)
+            thesis = thesis.filter(status='Approved')
             print(thesis)
         elif search:
             thesis = ThesisUpload.objects.filter(Q(title__icontains=search) |
             Q(abstract__icontains=search) | 
             Q(date_finished__icontains=search))
+            thesis = thesis.filter(status='Approved')
         elif category:
             thesis = ThesisUpload.objects.filter(category=category)
+            thesis = thesis.filter(status='Approved')
         else:
             thesis = ThesisUpload.objects.all()
+            thesis = thesis.filter(status='Approved')
     context = {'thesis': thesis, 'category': categories}
     return render(request, 'archive/thesis_archive.html', context)
 
@@ -81,6 +85,7 @@ def MyUploads(request):
             Q(date_finished__icontains=search)).filter(user=request.user)
             print(thesis)
             thesis = thesis.filter(category=category)
+            thesis = thesis.filter(status='Approved')
             print(thesis)
         elif search:
             thesis = ThesisUpload.objects.filter(Q(title__icontains=search) |
@@ -88,8 +93,10 @@ def MyUploads(request):
             Q(date_finished__icontains=search)).filter(user=request.user)
         elif category:
             thesis = ThesisUpload.objects.filter(category=category).filter(user=request.user)
+            thesis = thesis.filter(status='Approved')
         else:
             thesis = ThesisUpload.objects.filter(user=request.user)
+            thesis = thesis.filter(status='Approved')
     context = {'thesis': thesis, 'category': categories}
     return render(request, 'archive/user_uploads.html', context)
 
