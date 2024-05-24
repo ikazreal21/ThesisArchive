@@ -89,9 +89,10 @@
           class="layout-menu menu-vertical menu bg-menu-theme"
         >
         <div class="app-brand demo">
-            <a href="" class="app-brand-link">
+            <a href="" class="app-brand-link" style="margin-top: 2rem; margin-bottom: 1rem;">
               <span class="app-brand-logo demo">
                 <img src="{% static '/assets/img/logo.png' %}" width="50" alt="">
+                <p>Thesis Archive System</p>
                 <!-- <svg
                   width="25"
                   viewBox="0 0 25 42"
@@ -183,12 +184,6 @@
                 <div data-i18n="Analytics">Upload</div>
               </a>
             </li>
-            <li class="menu-item">
-              <a href="{% url 'profile' %}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
-                <div data-i18n="Analytics">Profile</div>
-              </a>
-            </li>
           </ul>
         </aside>
         <!-- / Menu -->
@@ -246,11 +241,40 @@
                 <!-- Place this tag where you want the button to render. -->
   
                 <!-- User -->
-                <li>
-                  <a class="dropdown-item" href="{%  url 'logout' %}">
-                    <i class="bx bx-power-off me-2"></i>
-                    <span class="align-middle">Log Out</span>
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      {% if  request.user.profile.image %}
+                        <img
+                          src="{{ request.user.profile.image.url }}"
+                          alt class="w-px-40 h-auto rounded-circle"
+                        />
+                      {% else %}
+                        <img
+                        src="https://api.dicebear.com/7.x/pixel-art/svg?seed={{request.user}}&hair=short01,short02,short03,short04,short05"
+                        alt class="w-px-40 h-auto rounded-circle"
+                        />
+                      {% endif %}
+                      <!-- <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" /> -->
+                    </div>
                   </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="{% url 'profile' %}">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{%  url 'logout' %}">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
                 </li>
                 <!--/ User -->
               </ul>
