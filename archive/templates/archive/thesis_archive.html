@@ -18,7 +18,7 @@ Thesis Archive System - Dashboard
                 <img src="{{i.thesis_cover.url}}" width="400" height="600" class="card-img-top" alt="{{i.title}}" style="margin-bottom: 1rem;">
             {% endif %}
             <h4 class="card-title">{{i.title | title}}</h4>
-            <h5 class="card-title">Publish on <b><u>{{i.date_pretty}}</u></b></h5>
+            <h5 class="card-title">Published on <b><u>{{i.date_pretty}}</u></b></h5>
             <h5><b><u>Main Contributors</u></b></h5>
             <p class="card-text">
                 {{i.author|title}}, {{i.author1|title}}</p>
@@ -27,6 +27,8 @@ Thesis Archive System - Dashboard
                 {{i.author2|title}}, {{i.author3|title}}, {{i.author4|title}}</p>
             <h5><b><u>Abstract</u></b></h5>
             <p class="card-text">{{i.abstract|capfirst|truncatewords:15|slice:"-4"}}...</p>
+            <h5><b><u>Categories</u></b></h5>
+            <p class="card-text">{{i.category|title}}</p>
 {% if i.file_thesis %}            
 <a href="{{i.file_thesis.url}}" target="_blank" class="btn btn-primary">Check the Full Capstone</a>
 {% endif %}

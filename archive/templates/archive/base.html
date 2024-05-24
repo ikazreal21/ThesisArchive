@@ -184,6 +184,12 @@
                 <div data-i18n="Analytics">Upload</div>
               </a>
             </li>
+            <li class="menu-item">
+              <a href="{% url 'title-generator' %}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-chalkboard"></i>
+                <div data-i18n="Analytics">Title Generator</div>
+              </a>
+            </li>
           </ul>
         </aside>
         <!-- / Menu -->
@@ -212,7 +218,7 @@
               id="navbar-collapse"
             >
               <!-- Search -->
-              {% if '/thesis_upload/' not in request.path and '/profile/' not in request.path and '/password_change/' not in request.path %}
+              {% if '/thesis_upload/' not in request.path and '/profile/' not in request.path and '/password_change/' not in request.path and '/title-generator/' not in request.path %}
               <form action="" method="POST">
               <div class="navbar-nav align-items-center">
                 <div class="nav-item d-flex align-items-center">

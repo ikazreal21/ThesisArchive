@@ -107,7 +107,8 @@
                     name="username"
                     placeholder="Enter your username"
                     autofocus
-                  />
+                    required
+                    />
                 </div>
                 <div class="mb-3">
                   <label for="email" class="form-label">Email</label>
@@ -117,7 +118,8 @@
                     id="email"
                     name="email"
                     placeholder="Enter your email"
-                  />
+                    required
+                    />
                 </div>
                 <div class="mb-3 form-password-toggle">
                   <label class="form-label" for="password">Password</label>
@@ -129,6 +131,7 @@
                       name="password1"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                       aria-describedby="password"
+                      required
                     />
                     <span class="input-group-text cursor-pointer"
                       ><i class="bx bx-hide"></i
@@ -146,6 +149,7 @@
                         name="password2"
                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                         aria-describedby="password"
+                        required
                       />
                       <span class="input-group-text cursor-pointer"
                         ><i class="bx bx-hide"></i
@@ -164,7 +168,7 @@
                     />
                     <label class="form-check-label" for="terms-conditions">
                       I agree to
-                      <a href="javascript:void(0);">privacy policy & terms</a>
+                      <a href="{% url 'terms' %}" target="_blank">privacy policy & terms</a>
                     </label>
                   </div>
                 </div>

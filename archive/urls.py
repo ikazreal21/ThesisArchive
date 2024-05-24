@@ -9,6 +9,12 @@ urlpatterns = [
     path("myuploads/", views.MyUploads, name="myuploads"),
     path("profile/", views.ProfilePage, name="profile"),
     path("compare/", views.CompareResearch, name="compare"),
+    path("title-generator/", views.TitleGenerator, name="title-generator"),
+
+
+
+    # Terms and Conditions
+    path("terms/", views.Terms, name="terms"),
 
     # Authentication
     path("password_change/", views.ChangePassword, name="password_change"),

@@ -42,7 +42,6 @@ def Home(request):
             print(thesis)
             thesis = thesis.filter(category=category)
             thesis = thesis.filter(status='Approved')
-            print(thesis)
         elif search:
             thesis = ThesisUpload.objects.filter(Q(title__icontains=search) |
             Q(abstract__icontains=search) | 
@@ -83,10 +82,8 @@ def MyUploads(request):
             thesis = ThesisUpload.objects.filter(Q(title__icontains=search) |
             Q(abstract__icontains=search) | 
             Q(date_finished__icontains=search)).filter(user=request.user)
-            print(thesis)
             thesis = thesis.filter(category=category)
             thesis = thesis.filter(status='Approved')
-            print(thesis)
         elif search:
             thesis = ThesisUpload.objects.filter(Q(title__icontains=search) |
             Q(abstract__icontains=search) | 
@@ -117,6 +114,11 @@ def ProfilePage(request):
 @login_required(login_url='login')
 def CompareResearch(request):
     return render(request, 'archive/compare.html')
+
+
+@login_required(login_url='login')
+def TitleGenerator(request):
+    return render(request, 'archive/title_generator.html')
 
 def Register(request):
     form = CreateUserForm()
@@ -168,3 +170,6 @@ def ChangePassword(request):
     return render(request, 'archive/change_password.html', {
         'form': form
     })
+
+def Terms(request):
+    return render(request, 'archive/termsandconditions.html')
