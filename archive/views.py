@@ -130,6 +130,7 @@ def CompareResearch(request):
 @login_required(login_url='login')
 def TitleGenerator(request):
     data_response = ""
+    titles_list = []
     if request.method == 'POST':
         category = request.POST.get('title')
         benificiary = request.POST.get('benificiaries')
