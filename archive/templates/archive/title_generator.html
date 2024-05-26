@@ -16,14 +16,37 @@ Thesis Archive System - Title Generator
         {% csrf_token %}
       <div class="card-body">
         <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Promt</label>
+          <label for="exampleFormControlInput1" class="form-label">Categories</label>
+          <sub>Seperate the Categories by Comma</sub>
           <input
             type="text"
             class="form-control"
             id="exampleFormControlInput1"
-            placeholder="Promt"
+            placeholder="Categories"
             name="title"
             required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Benificiary</label>
+          <input
+            type="text"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="Benificiary"
+            name="benificiaries"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">How Many?</label>
+          <input
+            type="number"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="How Many?"
+            name="generate"
+            min="1"
           />
         </div>
         <div class="mb-3">
@@ -31,6 +54,20 @@ Thesis Archive System - Title Generator
             <button type="submit" class="btn btn-primary">Generate</button>
           </div>
         </div>
+
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <ul>
+
+              {% if ai_return %}        
+                {% for title in ai_return %}
+                  <li><h2>{{ title }}</h2></li>
+                {% endfor %}
+              {% endif %}
+          </ul>
+        </div>
+        
       </div>
     </form>
     </div>

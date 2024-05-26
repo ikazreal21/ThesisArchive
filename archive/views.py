@@ -26,6 +26,17 @@ from .forms import *
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
+import os
+from openai import OpenAI
+api_key = os.environ.get("OPENAI_API_KEY")
+client = OpenAI(
+  api_key=os.environ.get(api_key),
+)
+
 @login_required(login_url='login')
 def Home(request):
     thesis = ThesisUpload.objects.all()
@@ -118,7 +129,37 @@ def CompareResearch(request):
 
 @login_required(login_url='login')
 def TitleGenerator(request):
-    return render(request, 'archive/title_generator.html')
+    data_response = ""
+    if request.method == 'POST':
+        category = request.POST.get('title')
+        benificiary = request.POST.get('benificiaries')
+        generate_number = request.POST.get('generate')
+
+        print(category)
+        print(benificiary)
+        print(generate_number)
+
+
+        if generate_number:
+            promt = f"create me a {generate_number} example of a capstone title with this categories: {category} for {benificiary}"
+        else:
+            promt = f"create me example of a capstone title with this categories: {category} for {benificiary}"
+
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo-0125",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant that generates Capstone title"},
+                {"role": "user", "content": promt}
+            ]
+            )
+        # data_response = response.choices[0].message['content']
+        data_response = response.choices[0].message.content
+        titles_list = re.split(r'\d+\.\s', data_response)
+            # Remove empty strings and strip extra whitespace
+        titles_list = [title.strip() for title in titles_list if title.strip()]
+        # print(response.choices[0].message.content)
+    context = {'ai_return' : titles_list}
+    return render(request, 'archive/title_generator.html', context)
 
 def Register(request):
     form = CreateUserForm()

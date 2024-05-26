@@ -2,3 +2,4 @@
 ThesisArchive/__pycache__/*
 archive/__pycache__/*
 archive/migrations
+.env
