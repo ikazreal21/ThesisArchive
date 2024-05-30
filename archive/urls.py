@@ -10,8 +10,14 @@ urlpatterns = [
     path("profile/", views.ProfilePage, name="profile"),
     path("compare/", views.CompareResearch, name="compare"),
     path("title-generator/", views.TitleGenerator, name="title-generator"),
+    
+    # Admin
+    path("admin_page/", views.AdminPage, name="admin_page"),
+    path("pending_uploads/", views.PendingUploads, name="pending_uploads"),
+    path("approved_uploads/<str:pk>", views.ApprovedUploads, name="approved_uploads"),
 
-
+    # Email Verification
+    path("verify/<str:token>/", views.Verify, name="verify"),
 
     # Terms and Conditions
     path("terms/", views.Terms, name="terms"),

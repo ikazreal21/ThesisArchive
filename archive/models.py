@@ -9,6 +9,10 @@ import uuid
 from django.core.files.storage import FileSystemStorage
 from django.db import models
 
+def create_rand_id():
+        from django.utils.crypto import get_random_string
+        return get_random_string(length=13, 
+            allowed_chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890')
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -18,6 +22,11 @@ class Profile(models.Model):
     phone = models.CharField(max_length=200, null=True, blank=True)
     image = models.ImageField(upload_to='profile_pics', null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    token = models.CharField(
+        max_length=100, null=True, blank=True, editable=False
+    )
+    is_verified = models.BooleanField(default=False)
+
 
     def __str__(self):
         return f"{self.first_name}"

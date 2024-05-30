@@ -22,6 +22,8 @@ from django.db.models import Q
 
 from .models import *
 from .forms import *
+from .utils import *
+
 
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -39,6 +41,8 @@ client = OpenAI(
 
 @login_required(login_url='login')
 def Home(request):
+    if request.user.is_superuser:
+        return redirect('admin_page')
     thesis = ThesisUpload.objects.all()
     categories = ThesisUpload.objects.values("category").distinct()
     print(categories)
@@ -162,14 +166,89 @@ def TitleGenerator(request):
     context = {'ai_return' : titles_list}
     return render(request, 'archive/title_generator.html', context)
 
+
+# Admin Page
+@login_required(login_url='login')
+def AdminPage(request):
+    if not request.user.is_superuser:
+        return redirect('home')
+    thesis = ThesisUpload.objects.all()
+    categories = ThesisUpload.objects.values("category").distinct()
+    print(categories)
+    if request.method == 'POST':
+        search = request.POST.get('search')
+        category = request.POST.get('category')
+        print(search, category)
+        if search and category:
+            thesis = ThesisUpload.objects.filter(Q(title__icontains=search) |
+            Q(abstract__icontains=search) | 
+            Q(date_finished__icontains=search))
+            print(thesis)
+            thesis = thesis.filter(category=category)
+            thesis = thesis.filter(status='Approved')
+        elif search:
+            thesis = ThesisUpload.objects.filter(Q(title__icontains=search) |
+            Q(abstract__icontains=search) | 
+            Q(date_finished__icontains=search))
+            thesis = thesis.filter(status='Approved')
+        elif category:
+            thesis = ThesisUpload.objects.filter(category=category)
+            thesis = thesis.filter(status='Approved')
+        else:
+            thesis = ThesisUpload.objects.all()
+            thesis = thesis.filter(status='Approved')
+    context = {'thesis': thesis, 'category': categories}
+    return render(request, 'archive/admin_archive/approve_archive.html', context)
+
+@login_required(login_url='login')
+def PendingUploads(request):
+    thesis = ThesisUpload.objects.filter(status='Pending')
+    categories = ThesisUpload.objects.values("category").distinct()
+    print(categories)
+    if request.method == 'POST':
+        search = request.POST.get('search')
+        category = request.POST.get('category')
+        print(search, category)
+        if search and category:
+            thesis = ThesisUpload.objects.filter(Q(title__icontains=search) |
+            Q(abstract__icontains=search) | 
+            Q(date_finished__icontains=search))
+            print(thesis)
+            thesis = thesis.filter(category=category)
+            thesis = thesis.filter(status='Pending')
+        elif search:
+            thesis = ThesisUpload.objects.filter(Q(title__icontains=search) |
+            Q(abstract__icontains=search) | 
+            Q(date_finished__icontains=search))
+            thesis = thesis.filter(status='Pending')
+        elif category:
+            thesis = ThesisUpload.objects.filter(category=category)
+            thesis = thesis.filter(status='Pending')
+        else:
+            thesis = ThesisUpload.objects.filter(status='Pending')
+    context = {'thesis': thesis, 'category': categories}
+    return render(request, 'archive/admin_archive/thesis_archive.html', context)
+
+@login_required(login_url='login')
+def ApprovedUploads(request, pk):
+    thesis = ThesisUpload.objects.get(id=pk)
+    thesis.status = 'Approved'
+    thesis.save()
+    return redirect('pending_uploads')
+
 def Register(request):
     form = CreateUserForm()
+    host = request.get_host()
+    random_id = create_rand_id()
+
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         print(form.errors)
         if form.is_valid():
             user = form.save()
-            Profile.objects.create(user=user, email=user.email)
+            messages.success(request, "Please verify your Email " + user.email)
+            Profile.objects.create(user=user, email=user.email, token=random_id)
+            send_email_token(user.email, random_id, host)
             return redirect('login')
     context = {'form': form}
     return render(request, 'archive/register.html', context)
@@ -185,8 +264,17 @@ def Login(request):
             user = authenticate(request, username=username, password=password)
 
             if user is not None:
-                login(request, user)
-                return redirect('home')
+                if user.is_superuser:
+                    login(request, user)
+                    return redirect('admin_page')
+                userDetail = Profile.objects.filter(user=user)
+                if userDetail:
+                    if userDetail[0].is_verified == True:
+                        login(request, user)
+                        return redirect('home')
+                    else:
+                        messages.info(request, 'Please verify your email address')
+                        return redirect('login')
             else:
                 messages.info(request, 'Username or Password is incorrect') 
     return render(request, 'archive/login.html')
@@ -215,3 +303,14 @@ def ChangePassword(request):
 
 def Terms(request):
     return render(request, 'archive/termsandconditions.html')
+
+def Verify(request, token):
+    profile = Profile.objects.get(token=token)
+    if profile:
+        profile.is_verified = True
+        profile.save()
+        messages.success(request, 'Email verified')
+        return redirect('login')
+    else:
+        messages.error(request, 'Email not verified')
+        return redirect('login')
