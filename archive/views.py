@@ -44,6 +44,7 @@ def Home(request):
     if request.user.is_superuser:
         return redirect('admin_page')
     thesis = ThesisUpload.objects.all()
+    thesis = thesis.filter(status='Approved')
     categories = ThesisUpload.objects.values("category").distinct()
     print(categories)
     if request.method == 'POST':
