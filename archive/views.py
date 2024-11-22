@@ -139,22 +139,22 @@ def TitleGenerator(request):
     if request.method == 'POST':
         category = request.POST.get('title')
         benificiary = request.POST.get('benificiaries')
-        generate_number = request.POST.get('generate')
+        # generate_number = request.POST.get('generate')
 
         print(category)
         print(benificiary)
         print(generate_number)
 
 
-        if generate_number:
-            promt = f"create me a {generate_number} example of a capstone title with this categories: {category} for {benificiary}"
-        else:
-            promt = f"create me example of a capstone title with this categories: {category} for {benificiary}"
+        # if generate_number:
+        #     promt = f"create me a {generate_number} example of a capstone title with this categories: {category} for {benificiary} and make it inconsistent for abount 30 percent"
+        # else:
+        promt = f"create me a 10 example of a capstone title with this categories: {category} for {benificiary} and make it inconsistent for abount 30 percent"
 
         response = client.chat.completions.create(
             model="gpt-3.5-turbo-0125",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant that generates Capstone title"},
+                {"role": "system", "content": "You are a helpful assistant that generates Capstone title with some inconsistency"},
                 {"role": "user", "content": promt}
             ]
             )
@@ -164,7 +164,7 @@ def TitleGenerator(request):
             # Remove empty strings and strip extra whitespace
         titles_list = [title.strip() for title in titles_list if title.strip()]
         # print(response.choices[0].message.content)
-    context = {'ai_return' : titles_list}
+    context = {'ai_return' : titles_list, 'category' : category}
     return render(request, 'archive/title_generator.html', context)
 
 
